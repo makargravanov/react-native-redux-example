@@ -1,117 +1,65 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+const App = () => {
+  const [localValue, setLocalValue] = useState('');
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+      <View style={styles.container}>
+        <Text style={styles.text_header}>Авторизация</Text>
+        <TextInput
+            style={styles.input}
+            onChangeText={setLocalValue}
+            value={localValue}
+            placeholder="Введите e-mail"
+        />
+        <TouchableOpacity>
+          <LinearGradient
+              colors={['#4c669f', '#3b5998', '#192f6a']}
+              style={styles.button_gradient}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+          >
+            <Text style={styles.button_text}>Войти</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+      </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+const styles= StyleSheet.create({
+  container: {
+    flex: 1,
+    rowGap: 50,
+    alignItems: 'center',
+
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  text_header: {
+    fontSize: 35,
+    marginTop: 200,
+    fontFamily: 'JetBrainsMono-Regular',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  input: {
+    width: 250,
+    height: 40,
+    borderColor: '#3b5998',
+    borderBottomWidth: 1,
+    paddingHorizontal: 10,
+    fontFamily: 'JetBrainsMono-Regular',
   },
-  highlight: {
-    fontWeight: '700',
+  button_gradient: {
+    borderRadius: 25,
+    width: 200,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  button_text: {
+    fontFamily: 'JetBrainsMono-Regular',
+    color: 'white',
+    fontSize: 16,
   },
 });
 
