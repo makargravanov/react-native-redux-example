@@ -1,66 +1,35 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { useSelector } from 'react-redux';
+import { RootState } from './src/store/store';
+import AuthScreen from './src/components/AuthScreen';
+import MainTabs from './src/components/MainTabs';
+
+const Stack = createStackNavigator();
 
 const App = () => {
-  const [localValue, setLocalValue] = useState('');
+    const userEmail = useSelector((state: RootState) => state.user.email);
 
-  return (
-      <View style={styles.container}>
-        <Text style={styles.text_header}>Авторизация</Text>
-        <TextInput
-            style={styles.input}
-            onChangeText={setLocalValue}
-            value={localValue}
-            placeholder="Введите e-mail"
-        />
-        <TouchableOpacity>
-          <LinearGradient
-              colors={['#4c669f', '#3b5998', '#192f6a']}
-              style={styles.button_gradient}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-          >
-            <Text style={styles.button_text}>Войти</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-      </View>
-  );
+    return (
+        <NavigationContainer>
+            <Stack.Navigator>
+                {userEmail ? (
+                    <Stack.Screen
+                        name="Main"
+                        component={MainTabs}
+                        options={{ headerShown: false }}
+                    />
+                ) : (
+                    <Stack.Screen
+                        name="Auth"
+                        component={AuthScreen}
+                        options={{ headerShown: false }}
+                    />
+                )}
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 };
-
-const styles= StyleSheet.create({
-  container: {
-    flex: 1,
-    rowGap: 50,
-    alignItems: 'center',
-
-  },
-  text_header: {
-    fontSize: 35,
-    marginTop: 200,
-    fontFamily: 'JetBrainsMono-Regular',
-  },
-  input: {
-    width: 250,
-    height: 40,
-    borderColor: '#3b5998',
-    borderBottomWidth: 1,
-    paddingHorizontal: 10,
-    fontFamily: 'JetBrainsMono-Regular',
-  },
-  button_gradient: {
-    borderRadius: 25,
-    width: 200,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button_text: {
-    fontFamily: 'JetBrainsMono-Regular',
-    color: 'white',
-    fontSize: 16,
-  },
-});
 
 export default App;
